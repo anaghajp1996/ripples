@@ -8,10 +8,13 @@
 import SwiftUI
 
 let colors: [Color] = [
-    Color.init(red: 87/255, green: 75/255, blue:144/255),
-    Color.init(red: 119/255, green: 139/255, blue:235/255),
-    Color.init(red: 247/255, green:215/255, blue:148/255),
-    Color.init(red: 207/255, green: 106/255, blue:135/255),
+    Color.init(red: 87/255, green: 75/255, blue: 144/255),
+    Color.init(red: 119/255, green: 139/255, blue: 235/255),
+    Color.init(red: 247/255, green: 215/255, blue: 148/255),
+    Color.init(red: 207/255, green: 106/255, blue: 135/255),
+    Color.init(red: 231/255, green: 127/255, blue: 103/255),
+    Color.init(red: 243/255, green: 166/255, blue: 131/255),
+    Color.init(red: 234/255, green: 134/255, blue: 133/255),
 ]
 
 extension CGPoint : Hashable {
