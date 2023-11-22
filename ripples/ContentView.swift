@@ -15,7 +15,7 @@ extension CGPoint : Hashable {
 }
 
 struct ContentView: View {
-    var innerRipple = Ripple(diameter: 0, color: Color.init(red: 87/255, green: 75/255, blue:144/255), number: 5)
+    var ripple = Ripple(diameter: 0, color: Color.init(red: 87/255, green: 75/255, blue:144/255), number: 5, ripple: false)
     @State var positions: [CGPoint] = []
     var body: some View {
         ZStack {
@@ -26,7 +26,7 @@ struct ContentView: View {
                     positions.append(location)
                 }
             ForEach(positions, id: \.self) { position in
-                RippleView(ripple: innerRipple).position(position)
+                RippleView(ripple: ripple).position(position)
                     
             }
         }
@@ -38,20 +38,20 @@ struct Ripple {
     var diameter: CGFloat
     var color: Color
     var number: Int
+    var ripple: Bool
 }
 
 struct RippleView: View {
     @State var ripple: Ripple
-
     var body: some View {
         ForEach(1...ripple.number, id: \.self) { i in
             Circle()
-                .stroke(ripple.color.opacity(Double(ripple.number - i)/10.0), lineWidth: CGFloat(i*30))
-                .fill(ripple.color.opacity(Double(i)/10.0))
+                .stroke(ripple.color.opacity(Double(ripple.number - i)/10.0), lineWidth: ripple.ripple ? 0 : CGFloat(i*10))
                 .frame(width: ripple.diameter, height: ripple.diameter)
                 .onAppear {
                     withAnimation(.linear(duration: 3.0)) {
                         ripple.diameter = 100
+                        ripple.ripple.toggle()
                     }
                 }
         }
