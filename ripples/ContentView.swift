@@ -8,14 +8,36 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var innerRipple = Ripple(diameter: 0, color: Color.init(red: 87/255, green: 75/255, blue:144/255))
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack {
+            RippleView(ripple: innerRipple)
+            Rectangle()
+                .fill(.clear)
         }
-        .padding()
+        .onAppear {
+            withAnimation(Animation.linear(duration: 3.0).repeatForever(autoreverses: false)) {
+                innerRipple.diameter = 300
+            }
+            
+        }
+        .edgesIgnoringSafeArea(.all)
+    }
+}
+
+struct Ripple {
+    var diameter: CGFloat
+    var color: Color
+}
+
+struct RippleView: View {
+    let ripple: Ripple
+
+    var body: some View {
+        Circle()
+            .fill(ripple.color)
+            .frame(width: ripple.diameter, height: ripple.diameter)
     }
 }
 
