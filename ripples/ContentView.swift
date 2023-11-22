@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var innerRipple = Ripple(diameter: 0, color: Color.init(red: 87/255, green: 75/255, blue:144/255))
+    @State var innerRipple = Ripple(diameter: 0, color: Color.init(red: 87/255, green: 75/255, blue:144/255), number: 5)
 
     var body: some View {
         ZStack {
-            RippleView(ripple: innerRipple)
             Rectangle()
                 .fill(.clear)
+            RippleView(ripple: innerRipple)
         }
         .onAppear {
             withAnimation(Animation.linear(duration: 3.0).repeatForever(autoreverses: false)) {
@@ -29,15 +29,20 @@ struct ContentView: View {
 struct Ripple {
     var diameter: CGFloat
     var color: Color
+    var number: Int
 }
 
 struct RippleView: View {
     let ripple: Ripple
 
     var body: some View {
-        Circle()
-            .fill(ripple.color)
-            .frame(width: ripple.diameter, height: ripple.diameter)
+        ForEach(1...ripple.number, id: \.self) { i in
+            Circle()
+                .stroke(ripple.color.opacity(Double(ripple.number - i)/10.0), lineWidth: CGFloat(i*30))
+                .fill(ripple.color.opacity(Double(i)/10.0))
+                .frame(width: ripple.diameter, height: ripple.diameter)
+                
+        }
     }
 }
 
